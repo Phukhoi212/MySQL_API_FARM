@@ -53,7 +53,7 @@ LoaiNV.getAll = result => {
 LoaiNV.updateById = (id, loainv, result) => {
   sql.query(
     "UPDATE loainhanvien SET TenLoai_NV = ?  WHERE MaLoai_NV = ?",
-    [loainv.LoaiNV, id],
+    [loainv.TenLoai_NV, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

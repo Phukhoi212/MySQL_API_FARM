@@ -2,12 +2,9 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
 const port = 4000;
-const db = require("./models/images");
 
 
 app.use(bodyParser.json());
-//
-//db.sequelize.sync();
 
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +25,6 @@ require("./routes/nhanvienRoutes")(app);
 require("./routes/loaihangRoutes")(app);
 require("./routes/productRoutes")(app);
 require("./routes/customerRoutes")(app);
-require("./routes/imageRoutes")(app);
 require("./routes/loainhanvienRoutes")(app);
 
 global.__basedir = __dirname;

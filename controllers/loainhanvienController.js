@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a LoaiNV
   const loainv = new LoaiNV({
-    TenLoai_NV	: req.body.name,
+    TenLoai_NV: req.body.name,
   });
 
   // Save LoaiNV in the database
