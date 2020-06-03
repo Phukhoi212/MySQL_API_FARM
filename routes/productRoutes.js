@@ -3,7 +3,7 @@ module.exports = app => {
   const uploads = require("../middleware/upload");
 
   // Create a new product
-  app.post("/products", products.create);
+  //app.post("/products", products.create);
 
   // Retrieve all products
   app.get("/products", products.findAll);
@@ -11,7 +11,7 @@ module.exports = app => {
   app.get("/products/search", products.findProduct);
 
   //upload image
-  app.post("/products/upload", uploads.single("file"), products.uploadFiles)
+  app.post("/products", uploads.single("file"), products.uploadFiles)
 
   // Retrieve a single product with productId
   app.get("/products/:productId", products.findOne);
