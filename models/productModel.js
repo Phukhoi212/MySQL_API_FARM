@@ -3,12 +3,12 @@ const sql = require("./db.js");
 // constructor
 const Product = function (product) {
   this.TenSanPham = product.TenSanPham;
-  this.HinhAnh = product.HinhAnh;
   this.GiaSanPham = product.GiaSanPham;
   this.SoLuong = product.SoLuong;
   this.Mota = product.Mota;
   this.Ma_NongTrai = product.Ma_NongTrai;
   this.Ma_LoaiHang = product.Ma_LoaiHang;
+  this.Image_Url = product.Image_Url;
 };
 
 Product.create = (newProduct, result) => {
@@ -57,9 +57,10 @@ Product.getAll = result => {
 };
 
 Product.updateById = (id, product, result) => {
+  console.log("product", product)
   sql.query(
-    "UPDATE sanpham SET TenSanPham = ?, HinhAnh = ?, GiaSanPham = ?, SoLuong = ?, Mota = ?, Ma_LoaiHang = ?, Ma_NongTrai = ? WHERE Ma_SanPham = ?",
-    [product.TenSanPham, product.HinhAnh, product.GiaSanPham, product.SoLuong, product.Mota, product.Ma_LoaiHang, product.Ma_NongTrai, id],
+    "UPDATE sanpham SET TenSanPham = ?, GiaSanPham = ?, SoLuong = ?, Mota = ?, Ma_LoaiHang = ?, Ma_NongTrai = ?, Image_Url = ? WHERE Ma_SanPham = ?",
+    [product.TenSanPham, product.GiaSanPham, product.SoLuong, product.Mota, product.Ma_LoaiHang, product.Ma_NongTrai, product.Image_Url, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -109,6 +110,20 @@ Product.removeAll = result => {
     console.log(`deleted ${res.affectedRows} products`);
     result(null, res);
   });
+};
+
+Product.searchByName = (productName) => {
+  return new Promise((resolve, reject) => {
+    sql.query(`SELECT * FROM sanpham WHERE TenSanPham LIKE '%${productName}%'`, (err, res) => {
+      const error = err || new Error("not_found");
+      if (Array.isArray(res) && res.length > 0) {
+        return resolve(res);
+      }
+      // not found product with the id
+      reject(error);
+    });
+  })
+
 };
 
 module.exports = Product;

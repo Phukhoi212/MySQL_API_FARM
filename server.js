@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 4000;
 
-
 app.use(bodyParser.json());
+app.use('/files', express.static('files'));
 
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,4 +35,4 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to api of Web Nong Trai!!!" });
 });
 
-app.use("/resources", express.static('resources'))
+app.use("/resources", express.static('resources'));

@@ -12,12 +12,12 @@ exports.create = (req, res) => {
   // Create a Product
   const product = new Product({
     TenSanPham: req.body.name,
-    HinhAnh: req.body.imageUrl,
     GiaSanPham: req.body.price,
     SoLuong: req.body.amount,
     Mota: req.body.description,
     Ma_NongTrai: req.body.idFarm,
     Ma_LoaiHang: req.body.idCategory,
+    Image_Url: hostName + "/resources/assets/uploads/" + req.file.filename,
   });
 
   // Save Product in the database
@@ -71,7 +71,7 @@ exports.update = (req, res) => {
 
   Product.updateById(
     req.params.productId,
-    new Product(req.body),
+    req.body,
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
@@ -120,16 +120,39 @@ exports.deleteAll = (req, res) => {
 
 exports.uploadFiles = async (req, res) => {
   try {
-    console.log(req.file);
     const hostName = req.protocol + "://" + req.hostname + ":4000";
     if (req.file == undefined) {
       return res.send(`You must select a file.`);
     }
-    return res.send({
-      link: hostName + "/resources/assets/uploads/" + req.file.filename
-    });
+    Product.create({
+      TenSanPham: req.body.name,
+      GiaSanPham: req.body.price,
+      SoLuong: req.body.amount,
+      Mota: req.body.description,
+      Ma_NongTrai: req.body.idFarm,
+      Ma_LoaiHang: req.body.idCategory,
+      Image_Url: hostName + "/resources/assets/uploads/" + req.file.filename,
+    }, (err, result) => {
+      if (!err)
+        res.send(result);
+      else throw new Error();
+    })
   } catch (error) {
     console.log(error);
     return res.send(`Error when trying upload images: ${error}`);
+  }
+};
+
+
+// Find a single Product with a ProductName
+exports.findProduct = async (req, res) => {
+  try {
+    console.log(req.query.q);
+    if (typeof req.query.q != 'string' || req.query.q.trim().length === 0) throw new Error('Ban phai cung cap ten san pham');
+    const result = await Product.searchByName(req.query.q);
+    console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.send({ message: error.message });
   }
 };
