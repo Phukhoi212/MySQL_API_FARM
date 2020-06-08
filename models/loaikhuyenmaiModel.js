@@ -2,7 +2,7 @@ const sql = require("./db.js");
 
 // constructor
 const LoaiKM = function (loaikm) {
-  this.TenLoaiKM = loainv.TenLoaiKM;
+  this.TenLoaiKM = loaikm.TenLoaiKM;
 };
 
 LoaiKM.create = (newLoaiKM, result) => {
@@ -67,14 +67,14 @@ LoaiKM.updateById = (id, loaikm, result) => {
         return;
       }
 
-      console.log("updated loai NV: ", { id: id, ...loainv });
-      result(null, { id: id, ...loainv });
+      console.log("updated loai NV: ", { id: id, ...loaikm });
+      result(null, { id: id, ...loaikm });
     }
   );
 };
 
-LoaiNV.remove = (id, result) => {
-  sql.query("DELETE FROM loainhanvien WHERE MaLoai_NV = ?", id, (err, res) => {
+LoaiKM.remove = (id, result) => {
+  sql.query("DELETE FROM loaikhuyenmai WHERE Ma_LoaiKM = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -82,27 +82,27 @@ LoaiNV.remove = (id, result) => {
     }
 
     if (res.affectedRows == 0) {
-      // not found loai NV with the id
+      // not found loai KM with the id
       result({ kind: "not_found" }, null);
       return;
     }
 
-    console.log("deleted loai NV with id: ", id);
+    console.log("deleted loai KM with id: ", id);
     result(null, res);
   });
 };
 
-LoaiNV.removeAll = result => {
-  sql.query("DELETE FROM loainhanvien", (err, res) => {
+LoaiKM.removeAll = result => {
+  sql.query("DELETE FROM loaikhuyenmai", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} loai nhan vien`);
+    console.log(`deleted ${res.affectedRows} loai khuyen mai`);
     result(null, res);
   });
 };
 
-module.exports = LoaiNV;
+module.exports = LoaiKM;

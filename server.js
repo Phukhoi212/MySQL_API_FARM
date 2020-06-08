@@ -26,6 +26,8 @@ require("./routes/loaihangRoutes")(app);
 require("./routes/productRoutes")(app);
 require("./routes/customerRoutes")(app);
 require("./routes/loainhanvienRoutes")(app);
+require("./routes/loaikhuyenmaiRoutes")(app);
+require("./routes/danhgiaRoutes")(app);
 
 global.__basedir = __dirname;
 app.listen(port, () => console.log(`App listening on port ${port}!`));

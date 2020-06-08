@@ -2,7 +2,7 @@ const sql = require("./db.js");
 
 // constructor
 const LoaiNV = function (loainv) {
-  this.TenLoai_NV = loainv.TenLoai_NV;
+  this.TenLoaiNV = loainv.TenLoaiNV;
 };
 
 LoaiNV.create = (newLoaiNV, result) => {
@@ -52,7 +52,7 @@ LoaiNV.getAll = result => {
 
 LoaiNV.updateById = (id, loainv, result) => {
   sql.query(
-    "UPDATE loainhanvien SET TenLoai_NV = ?  WHERE MaLoai_NV = ?",
+    "UPDATE loainhanvien SET TenLoaiNV = ?  WHERE MaLoai_NV = ?",
     [loainv.TenLoai_NV, id],
     (err, res) => {
       if (err) {

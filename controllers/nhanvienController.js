@@ -12,13 +12,14 @@ exports.create = (req, res) => {
   // Create a EMployee
   const employ = new Employee({
     TEN_NV: req.body.name,
-    NGAY_SINH: req.body.birthYear,
+    NgaySinh: req.body.birthYear,
     SDT: req.body.phone,
-    GIOI_TINH: req.body.gender,
-    DIA_CHI: req.body.address,
-    TEN_DN: req.body.userName,
-    MATKHAU: req.body.password,
-    MA_NT: req.body.idFarm,
+    GioiTinh: req.body.gender,
+    DiaChi: req.body.address,
+    TenDangNhap: req.body.userName,
+    MatKhau: req.body.password,
+    MaLoai_NV: req.body.id_loai,
+    Ma_NongTrai: req.body.idFarm,
   });
 
   // Save Employee in the database

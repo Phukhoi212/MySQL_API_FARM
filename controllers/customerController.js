@@ -1,5 +1,12 @@
 const Customer = require("../models/customerModel");
 
+const jwt = require("jsonwebtoken")
+
+let bearer_token = jwt.sign({
+  exp: Math.floor(Date.now() / 1000) + (60 * 60),
+  data: 'foobar'
+}, 'secret');
+
 // Create and Save a new Customer
 exports.create = (req, res) => {
   // Validate request
@@ -115,5 +122,31 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all Customers."
       });
     else res.send({ message: `All Customers were deleted successfully!` });
+  });
+};
+
+// handle login Customer
+exports.login = (req, res) => {
+  // Validate request
+  const password = req.body.password;
+  Customer.findByUserName(req.body.userName, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Customer with id ${req.body.userName}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Customer with id " + req.body.userName
+        });
+      }
+    } else {
+      if (password === data.MatKhau) {
+        res.status(200).send({
+          message: "Login success!!! " + req.body.userName,
+          token: bearer_token,
+        });
+      }
+    }
   });
 };

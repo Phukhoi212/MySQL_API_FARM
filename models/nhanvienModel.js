@@ -3,13 +3,14 @@ const sql = require("./db.js");
 // constructor
 const Employee = function (employ) {
   this.TEN_NV = employ.TEN_NV;
-  this.NGAY_SINH = employ.NGAY_SINH;
+  this.NgaySinh = employ.NgaySinh;
   this.SDT = employ.SDT;
-  this.GIOI_TINH = employ.GIOI_TINH;
-  this.DIA_CHI = employ.DIA_CHI;
-  this.TEN_DN = employ.TEN_DN;
-  this.MATKHAU = employ.MATKHAU;
-  this.MA_NT = employ.MA_NT;
+  this.GioiTinh = employ.GioiTinh;
+  this.DiaChi = employ.DiaChi;
+  this.TenDangNhap = employ.TenDangNhap;
+  this.MatKhau = employ.MatKhau;
+  this.MaLoai_NV = employ.MaLoai_NV;
+  this.Ma_NongTrai = employ.Ma_NongTrai
 };
 
 Employee.create = (newEmploy, result) => {
@@ -59,8 +60,8 @@ Employee.getAll = result => {
 
 Employee.updateById = (id, employ, result) => {
   sql.query(
-    "UPDATE nhanvien SET TEN_NV = ?, NGAY_SINH = ?, SDT = ?, GIOI_TINH = ?, DIA_CHI = ?, TEN_DN = ?, MATKHAU = ?, MA_NT = ? WHERE MA_NV = ?",
-    [employ.TEN_NV, employ.NGAY_SINH, employ.SDT, employ.GIOI_TINH, employ.DIA_CHI, employ.TEN_DN, employ.MATKHAU, employ.MA_NT, id],
+    "UPDATE nhanvien SET TEN_NV = ?, NgaySinh = ?, SDT = ?, GioiTinh = ?, DiaChi = ?, TenDangNhap = ?, MatKhau = ?, MaLoai_NV = ?, Ma_NongTrai = ? WHERE MA_NV = ?",
+    [employ.TEN_NV, employ.NgaySinh, employ.SDT, employ.GioiTinh, employ.DiaChi, employ.TenDangNhap, employ.MatKhau, employ.MaLoai_NV, employ.Ma_NongTrai, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -1,5 +1,10 @@
 const Admin = require("../models/adminModel");
+const jwt = require("jsonwebtoken")
 
+let bearer_token = jwt.sign({
+  exp: Math.floor(Date.now() / 1000) + (60 * 60),
+  data: 'foobar'
+}, 'secret');
 
 // handle login Admin
 exports.login = (req, res) => {
@@ -17,11 +22,10 @@ exports.login = (req, res) => {
         });
       }
     } else {
-      console.log("===>data",password, data.MatKhau)
       if (password === data.MatKhau) {
         res.status(200).send({
           message: "Login success!!! " + req.body.userName,
-          token: "loginSuccess_author"
+          token: bearer_token
         });
       }
     }
