@@ -30,7 +30,7 @@ Farm.findById = (farmId, result) => {
     }
 
     if (res.length) {
-      console.log("found admin: ", res[0]);
+      console.log("found farm: ", res[0]);
       result(null, res[0]);
       return;
     }

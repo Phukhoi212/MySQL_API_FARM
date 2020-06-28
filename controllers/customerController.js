@@ -144,6 +144,8 @@ exports.login = (req, res) => {
       if (password === data.MatKhau) {
         res.status(200).send({
           message: "Login success!!! " + req.body.userName,
+          user: req.body.userName,
+          userId: data.Ma_KhachHang,
           token: bearer_token,
         });
       }

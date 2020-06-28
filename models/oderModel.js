@@ -2,26 +2,29 @@ const sql = require("./db.js");
 
 // constructor
 const Oder = function (oder) {
-  this.TRANG_THAI = oder.TRANG_THAI;
-  this.NGAYDAT = oder.NGAYDAT;
-  this.NGAYGIAO = oder.NGAYGIAO;
-  this.DIACHIGIAO = oder.DIACHIGIAO
-  this.GHICHU = oder.GHICHU,
-  this.MA_NV = oder.MA_NV,
+  this.TrangThai = oder.TrangThai;
+  this.NgayDat = oder.NgayDat;
+  this.NgayGiao = oder.NgayGiao;
+  this.Ma_KhachHang = oder.Ma_KhachHang
+  this.GhiChu = oder.GhiChu,
+    this.MA_NV = oder.MA_NV,
+    this.DiaChiGiao = oder.DiaChiGiao
+};
+
+Oder.create = (newOder, result) => {
   sql.query("INSERT INTO dondathang SET ?", newOder, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
-
     console.log("created Oder: ", { id: res.insertId, ...newOder });
     result(null, { id: res.insertId, ...newOder });
   });
 };
 
 Oder.findById = (oderId, result) => {
-  sql.query(`SELECT * FROM dondathang WHERE MA_DDH = ${oderId}`, (err, res) => {
+  sql.query(`SELECT * FROM dondathang WHERE Ma_DonHang = ${oderId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -54,8 +57,8 @@ Oder.getAll = result => {
 
 Oder.updateById = (id, oder, result) => {
   sql.query(
-    "UPDATE dondathang SET TRANG_THAI = ?, NGAYDAT = ?, NGAY_GIAO = ?, DIACHIGIAO = ?, GHICHU = ?, MA_NV = ? WHERE MA_DDH = ?",
-    [oder.TRANG_THAI, oder.NGAYDAT, oder.NGAYGIAO, oder.DIACHIGIAO, oder.GHICHU, oder.MA_NV, id],
+    "UPDATE dondathang SET TrangThai = ?, NgayDat = ?, NgayGiao = ?, DiaChiGiao = ?, GhiChu = ?, MA_NV = ?, Ma_KhachHang = ? WHERE MA_DDH = ?",
+    [oder.TrangThai, oder.NgayDat, oder.NgayGiao, oder.DiaChiGiao, oder.GhiChu, oder.MA_NV, order.Ma_KhachHang, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -76,7 +79,7 @@ Oder.updateById = (id, oder, result) => {
 };
 
 Oder.remove = (id, result) => {
-  sql.query("DELETE FROM dondathang WHERE MA_DDH = ?", id, (err, res) => {
+  sql.query("DELETE FROM dondathang WHERE Ma_DonHang = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

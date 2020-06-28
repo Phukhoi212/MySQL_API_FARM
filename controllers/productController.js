@@ -156,3 +156,21 @@ exports.findProduct = async (req, res) => {
     res.send({ message: error.message });
   }
 };
+
+// Find list product by id Nong Trai
+
+exports.findFarmProduct = async (req, res) => {
+  Product.findProductByIdFarm(req.params.idFarm, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Product with id ${req.params.idFarm}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Product with id " + req.params.idFarm
+        });
+      }
+    } else res.send(data);
+  });
+}

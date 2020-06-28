@@ -1,7 +1,14 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require("cors");
 const port = 4000;
+
+var corsOptions = {
+  origin: "*"
+};
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use('/files', express.static('files'));
@@ -28,6 +35,10 @@ require("./routes/customerRoutes")(app);
 require("./routes/loainhanvienRoutes")(app);
 require("./routes/loaikhuyenmaiRoutes")(app);
 require("./routes/danhgiaRoutes")(app);
+require("./routes/khuyenmaiRoutes")(app);
+require("./routes/oderRoutes")(app);
+require("./routes/oderdetailRoutes")(app);
+require("./routes/commentRoutes")(app);
 
 global.__basedir = __dirname;
 app.listen(port, () => console.log(`App listening on port ${port}!`));

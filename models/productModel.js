@@ -126,4 +126,23 @@ Product.searchByName = (productName) => {
 
 };
 
+Product.findProductByIdFarm = (idFarm, result) => {
+  sql.query(`SELECT * FROM sanpham WHERE Ma_NongTrai = ${idFarm}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found product: ", res[0]);
+      result(null, res);
+      return;
+    }
+
+    // not found product with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
 module.exports = Product;

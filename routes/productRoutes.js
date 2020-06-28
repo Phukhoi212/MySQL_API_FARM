@@ -24,5 +24,8 @@ module.exports = app => {
 
   // Create a new product
   app.delete("/products", products.deleteAll);
+
+  //
+  app.get("/farm/products/:idFarm", products.findFarmProduct);
   
 };

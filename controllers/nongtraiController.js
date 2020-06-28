@@ -42,15 +42,15 @@ exports.findAll = (req, res) => {
 
 // Find a single Farm with a FarmID
 exports.findOne = (req, res) => {
-  Farm.findById(req.params.famrId, (err, data) => {
+  Farm.findById(req.params.farmId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Farm with id ${req.params.famrId}.`
+          message: `Not found Farm with id ${req.params.farmId}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Farm with id " + req.params.famrId
+          message: "Error retrieving Farm with id " + req.params.farmId
         });
       }
     } else res.send(data);
